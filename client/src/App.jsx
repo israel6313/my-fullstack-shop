@@ -4,10 +4,13 @@ import './App.css';
 import { ShoppingCart, X, Trash2, Plus, User, LogOut, Loader } from 'lucide-react';
 
 function App() {
+  // --- הגדרת כתובת השרת ---
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
   // --- הגדרת משתנים (States) ---
   
-  // 1. תיקון: טעינת המשתמש ישירות בהגדרה (Lazy Initialization)
-  // זה מונע את השגיאה של עדכון בתוך useEffect
+  // 1. תיקון קריטי: טעינת המשתמש ישירות בהגדרה (מונע את השגיאה)
+  // הפונקציה בתוך useState רצה רק פעם אחת כשהדף עולה
   const [user, setUser] = useState(() => localStorage.getItem('username'));
 
   // 2. שאר המשתנים
@@ -27,7 +30,7 @@ function App() {
   // --- טעינה ראשונית (useEffect) ---
   useEffect(() => {
     // טעינת מוצרים מהשרת בלבד
-    axios.get('http://localhost:5000/api/products')
+    axios.get(`${API_URL}/api/products`)
       .then(res => {
         setProducts(res.data);
         setLoading(false);
@@ -37,7 +40,8 @@ function App() {
         setLoading(false);
       });
       
-    // מחקנו מכאן את הקוד הבעייתי של setUser!
+    // שים לב: מחקנו מכאן את הקוד של setUser שגרם לשגיאה!
+    // הוא עבר למעלה לשורה של useState.
   }, []);
 
   // --- פונקציות עזר (Logic) ---
@@ -64,7 +68,7 @@ function App() {
     const payload = isLoginMode ? { email, password } : { username, email, password };
 
     try {
-      const { data } = await axios.post(`http://localhost:5000${endpoint}`, payload);
+      const { data } = await axios.post(`${API_URL}${endpoint}`, payload);
       
       if (isLoginMode) {
         localStorage.setItem('token', data.token);
