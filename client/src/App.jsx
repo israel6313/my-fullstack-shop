@@ -5,7 +5,7 @@ import { ShoppingCart, X, Trash2, Plus, User, LogOut, Loader } from 'lucide-reac
 
 function App() {
   // --- הגדרת כתובת השרת ---
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const API_URL = import.meta.env.VITE_API_URL || 'https://myshop-api.onrender.com';
 
   // --- הגדרת משתנים (States) ---
   
