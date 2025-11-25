@@ -5,7 +5,8 @@ import { ShoppingCart, X, Trash2, Plus, User, LogOut, Loader } from 'lucide-reac
 
 function App() {
   // --- הגדרת כתובת השרת ---
-  const API_URL = import.meta.env.VITE_API_URL || 'https://my-fullstack-shop.onrender.com';
+  // הכתובת המתוקנת (השרת שלך)
+const API_URL = "https://my-fullstack-shop.onrender.com";
 
   // --- הגדרת משתנים (States) ---
   
